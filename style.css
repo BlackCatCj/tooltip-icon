@@ -1,0 +1,182 @@
+/* ?引入字体 网址就是html中引入的link中的网址 */
+/* !必须引入这个，因为content:'\f00d'这种要用到这个字体，否则出现不了图标的 */
+@import url("https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css");
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
+    /* background: linear-gradient(315deg,#ffffff,#d7e1ec); */
+}
+
+.wrapper{
+    width: 100px;
+    margin: 0 10px ;
+}
+@media(max-width:500px){
+    .wrapper{
+        width: 50px;
+        margin: 0 2px ;
+    }
+}
+
+.wrapper .icon{
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    /* !设置好相对定位，给子元素做绝对定位的铺垫 */
+    position: relative;
+    /* 设置鼠标移入时的光标样式为手指，否则默认的是箭头，没变化 */
+    cursor: pointer;
+
+    /* ?变换效果的设置要一致，不然消失的时候很突兀 */
+    transition: all 0.4s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+
+.wrapper .icon span{
+    position: relative;
+    height: 60px;
+    width: 60px;
+    /* 让span内的图标永远居中 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .icon span i{
+    font-size: 25px;
+}
+
+@media(max-width:500px){
+    .wrapper .icon span{
+        height: 30px;
+        width: 30px;
+    }
+    .wrapper .icon span i{
+        font-size: 15px;
+    }
+}
+
+/* 当鼠标移入图标时，改变span的color，默认是黑色，现在改为白色 */
+.wrapper .icon:hover span {
+    color: #fff;
+}
+
+/* 图标的提示标签 */
+.wrapper .icon .tooltip{
+    /* 相对于父元素的绝对定位 */
+    position: absolute;
+    width: 150px;
+    top: 0;
+    font-size: 20px;
+    /* 修改padding会影响箭头的位置 */
+    padding: 10px 18px;
+    /* 文字居中 */
+    text-align: center;
+    border-radius: 25px;
+    color: #fff;
+    background: #fff;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+
+    /* !鼠标未移入图标时，设置标签为透明 */
+    opacity: 0;
+    /*! 前面给图标设置了移入时指针变为手指的效果，这个就是清除手指效果的 */
+    /* 如果不把标签的鼠标事件限制掉，那用户把鼠标移入标签内时会造成停留，而不能让标签消失了 */
+    /* !限制鼠标事件及对覆盖元素层进行穿透 */
+    pointer-events: none;
+
+    /*  
+    transition 属性是一个简写属性，用于设置四个过渡属性：
+    transition-property           ----->规定设置过渡效果的 CSS 属性的名称  (默认 all--->所有属性都将获得过渡效果|property---->定义应用过渡效果的 CSS 属性名称列表，列表以逗号分隔.如：width,height)
+    transition-duration           ----->规定完成过渡效果需要多少秒或毫秒
+    transition-timing-function    ----->规定速度效果的速度曲线 （默认:ease-->慢速开始，然后变快，然后慢速结束  linear--->相同速度）（cubic-bezier(n,n,n,n)--->在 cubic-bezier 函数中定义自己的值。可能的值是 0 至 1 之间的数值）
+    transition-delay              ----->定义过渡效果何时开始  (规定在过渡效果开始之前需要等待的时间)
+    */
+    /* !当鼠标移入图标内时的变换效果设置 */
+    transition: all 0.4s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+
+@media(max-width:500px){
+    .wrapper .icon .tooltip{
+        font-size: 10px;
+        width: 100px;
+    }
+}
+
+/* 鼠标移入图标内时 */
+.wrapper .icon:hover .tooltip{
+    /* 把标签移动到图标的上面 */
+    top: -70px;
+    /* 调成不透明，这样就显示出来了 */
+    opacity: 1;
+}
+
+@media(max-width:500px){
+    .wrapper .icon:hover .tooltip{
+        top: -50px;
+    }
+}
+
+/* 提示标签的向下小箭头制作 */
+.wrapper .icon .tooltip:before{
+    position: absolute;
+    content: '';
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    /* ! 因为给提示标签增加的出现动画速度设置，所以这里也要加上这个速度设置，不然小箭头会很突兀的消失*/
+    /* 若不加，会导致移出图标时，箭头先变白 */
+    transition: all 0.4s cubic-bezier(0.68,-0.55,0.265,1.55);
+
+}
+/* 文字阴影 */
+.wrapper .icon:hover span,
+.wrapper .icon:hover .tooltip{
+    text-shadow: 09x -1px 0px rgba(0, 0, 0, 0.4);
+}
+
+
+/* 每个图标自己的颜色 */
+.wrapper .icon1:hover span,
+.wrapper .icon1:hover .tooltip,
+.wrapper .icon1:hover .tooltip:before{
+    background: #3b5999;
+}
+.wrapper .icon2:hover span,
+.wrapper .icon2:hover .tooltip,
+.wrapper .icon2:hover .tooltip:before{
+    background: #46C1F6;
+}
+.wrapper .icon3:hover span,
+.wrapper .icon3:hover .tooltip,
+.wrapper .icon3:hover .tooltip:before{
+    background: #e1306c;
+}
+.wrapper .icon4:hover span,
+.wrapper .icon4:hover .tooltip,
+.wrapper .icon4:hover .tooltip:before{
+    background: #333;
+}
+.wrapper .icon5:hover span,
+.wrapper .icon5:hover .tooltip,
+.wrapper .icon5:hover .tooltip:before{
+    background: #DE463B;
+}
